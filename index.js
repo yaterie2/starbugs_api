@@ -46,7 +46,7 @@ app.get('/api/constellation', async (req, res) => {
             ]
         }).sort({ mag: 1 });
         res.json(stars);
-        // console.log(`Found stars: ${stars.length}`);
+        console.log(`Found stars: ${stars.length}`);
     } catch (error) {
         console.error('Fehler beim Abrufen der Sterndaten:', error);
         res.status(500).json({ message: 'Interner Serverfehler' });
