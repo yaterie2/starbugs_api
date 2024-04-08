@@ -6,9 +6,6 @@ const cors = require('cors');
 
 const port = 3000;
 
-/* const username = process.env.MONGO_INITDB_ROOT_USERNAME;
-const password = process.env.MONGO_INITDB_ROOT_PASSWORD;
- */
 const mongoUri = process.env.MONGO_URI + process.env.MONGO_DB;
 const mongoCollection = process.env.MONGO_COLLECTION;
 
@@ -21,7 +18,7 @@ const starSchema = new mongoose.Schema({
 });
 
 const Star = mongoose.model(mongoCollection, starSchema, mongoCollection);
-
+console.log("connecting to " + mongoUri);
 mongoose.connect(mongoUri)
     .then(() => console.log('MongoDB connection successful'))
     .catch(err => console.error('MongoDB connection error:', err));
