@@ -2,7 +2,7 @@ version: "3.6"
 
 services:
   frontend:
-    build: ghcr.io/caitoor/starbugs_frontend:latest
+    image: ghcr.io/caitoor/starbugs_frontend:latest
     deploy:
       replicas: 1
       update_config:
@@ -22,7 +22,7 @@ services:
       - proxy
 
   backend:
-    build: ghcr.io/caitoor/starbugs_api:latest
+    image: ghcr.io/caitoor/starbugs_api:latest
     environment:
       - API_PORT=3000
       - MONGO_URI=mongodb://mongo:27017/
@@ -48,9 +48,10 @@ services:
         - "traefik.http.services.backend.loadbalancer.server.scheme=http"
     networks:
       - proxy
+      - starbugs
 
   mongo:
-    image: mongo
+    image: mongo:7
     environment:
       - MONGO_INITDB_ROOT_USERNAME=faebs
       - MONGO_INITDB_ROOT_PASSWORD=secret
@@ -64,10 +65,13 @@ services:
         order: start-first
     networks:
       - proxy
+      - starbugs
 
 networks:
   proxy:
     external: true
+  starbugs:
+    
 
 volumes:
   mongo_data:
