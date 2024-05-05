@@ -52,9 +52,9 @@ app.get('/constellation', async (req, res) => {
 
 app.get('/', (req, res) => {
     // console.log("calling root endpoint");
-    res.send('Welcome to the Starbugs API');
+    res.send('Welcome to the Starbugs API!');
 });
 
 app.listen(port, () => {
-    console.log(`API script is running on  port ${port}.`);
+    console.log(`API script is running on port ${port}.`);
 });
