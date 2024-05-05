@@ -4,7 +4,7 @@ services:
   frontend:
     image: ghcr.io/caitoor/starbugs_frontend:latest
     environment:
-      - VITE_API_BASE_URL=https://${BACKEND_SUBDOMAIN}.${DOMAIN}/
+      - VITE_API_BASE_URL=https://${BACKEND_SUBDOMAIN}.${DOMAIN}
     deploy:
       replicas: 1
       update_config:
@@ -32,7 +32,7 @@ services:
       - MONGO_COLLECTION=${MONGO_COLLECTION}
       - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
       - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
-      - MONGO_URI=mongodb://${MONGO_CONTAINER_NAME}:27017/${MONGO_DB}/
+      - MONGO_URI=mongodb://${MONGO_CONTAINER_NAME}:27017/${MONGO_DB}
     deploy:
       replicas: 1
       update_config:
