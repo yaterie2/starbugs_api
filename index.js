@@ -5,9 +5,11 @@ const app = express();
 const cors = require('cors');
 
 const port = process.env.API_PORT | 3000;
-
-const mongoUri = process.env.MONGO_URI; // created in docker-compose.yml
 const mongoCollection = process.env.MONGO_COLLECTION;
+
+// .envs created in docker-compose.yml:
+const mongoUri = process.env.MONGO_URI; 
+const frontendUrl = process.env.FRONTEND_URL;
 
 const starSchema = new mongoose.Schema({
     proper: String,
@@ -23,18 +25,11 @@ mongoose.connect(mongoUri)
     .then(() => console.log('MongoDB connection successful'))
     .catch(err => console.error('MongoDB connection error:', err));
 
-// the following leads to undefined url in the container:
-// const frontendUrl = `https://${process.env.FRONTEND_SUBDOMAIN}.${process.env.DOMAIN}/`;
-
-const frontendUrl = "https://starbugs.sweavs.de";
-console.log(`frontendUrl: ${frontendUrl}`);
-
 const corsOptions = {
     origin: frontendUrl,
 };
-// this leads to CORS issues:
-// app.use(cors(corsOptions));
-app.use(cors());
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 app.get('/constellation', async (req, res) => {
