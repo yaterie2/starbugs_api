@@ -32,8 +32,9 @@ console.log(`frontendUrl: ${frontendUrl}`);
 const corsOptions = {
     origin: frontendUrl,
 };
-
-app.use(cors(corsOptions));
+// this leads to CORS issues:
+// app.use(cors(corsOptions));
+app.use(cors());
 app.use(express.json());
 
 app.get('/constellation', async (req, res) => {
