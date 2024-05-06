@@ -52,7 +52,7 @@ services:
       - "3000:3000"
     networks:
       - proxy
-      - starbugs
+      - starbugs_network
 
   mongo:
     image: mongo:7
@@ -70,13 +70,12 @@ services:
         order: start-first
     networks:
       - proxy
-      - starbugs
+      - starbugs_network
 
 networks:
   proxy:
     external: true
-  starbugs:
+  starbugs_network:
     
-
 volumes:
   mongo_data:

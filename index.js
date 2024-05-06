@@ -23,8 +23,11 @@ mongoose.connect(mongoUri)
     .then(() => console.log('MongoDB connection successful'))
     .catch(err => console.error('MongoDB connection error:', err));
 
+const frontendUrl = `https://${process.env.FRONTEND_SUBDOMAIN}.${process.env.DOMAIN}/`;
+console.log(`frontendUrl: ${frontendUrl}`);
+
 const corsOptions = {
-    origin: `https://${process.env.FRONTEND_SUBDOMAIN}.${process.env.DOMAIN}/`,
+    origin: frontendUrl,
 };
 
 app.use(cors(corsOptions));
