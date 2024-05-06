@@ -3,8 +3,6 @@ version: "3.8"
 services:
   frontend:
     image: ghcr.io/caitoor/starbugs_frontend:latest
-    environment:
-      - VITE_API_BASE_URL=https://${BACKEND_SUBDOMAIN}.${DOMAIN}
     deploy:
       replicas: 1
       update_config:
@@ -28,11 +26,8 @@ services:
     environment:
       - API_PORT=${API_PORT}
       - FRONTEND_URL=https://${FRONTEND_SUBDOMAIN}.${DOMAIN}
-      - MONGO_DB=${MONGO_DB}
       - MONGO_COLLECTION=${MONGO_COLLECTION}
-      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
-      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
-      - MONGO_URI=mongodb://${MONGO_CONTAINER_NAME}:27017/${MONGO_DB}
+      - MONGO_URI=mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@starbugs_mongo:27017/${MONGO_DB}?authSource=admin
     deploy:
       replicas: 1
       update_config:
@@ -47,19 +42,17 @@ services:
         - "traefik.http.routers.${BACKEND_SUBDOMAIN}.tls=true"
         - "traefik.http.routers.${BACKEND_SUBDOMAIN}.tls.certresolver=cf"
         - "traefik.http.services.${BACKEND_SUBDOMAIN}.loadbalancer.server.port=${API_PORT}"
-        - "traefik.http.services.${BACKEND_SUBDOMAIN}.loadbalancer.server.scheme=https"
-    ports:
-      - "3000:3000"
+        - "traefik.http.services.${BACKEND_SUBDOMAIN}.loadbalancer.server.scheme=http"
+
     networks:
       - proxy
       - starbugs_network
 
   mongo:
     image: mongo:7
-    container_name: ${MONGO_CONTAINER_NAME}
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=faebs
-      - MONGO_INITDB_ROOT_PASSWORD=secret
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
     volumes:
       - mongo_data:/data/db
     deploy:
@@ -68,6 +61,8 @@ services:
         delay: 10s
         failure_action: rollback
         order: start-first
+    ports:
+      - 27027:27017
     networks:
       - proxy
       - starbugs_network
