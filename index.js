@@ -26,7 +26,7 @@ mongoose.connect(mongoUri)
 // the following leads to undefined url in the container:
 // const frontendUrl = `https://${process.env.FRONTEND_SUBDOMAIN}.${process.env.DOMAIN}/`;
 
-const frontendUrl = "https://starbugs_api.sweavs.de";
+const frontendUrl = "https://starbugs.sweavs.de";
 console.log(`frontendUrl: ${frontendUrl}`);
 
 const corsOptions = {
