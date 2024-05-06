@@ -4,3 +4,4 @@ node_modules
 readme.md
 .github
 docker-compose.yml
+.gitignore

@@ -23,7 +23,10 @@ mongoose.connect(mongoUri)
     .then(() => console.log('MongoDB connection successful'))
     .catch(err => console.error('MongoDB connection error:', err));
 
-const frontendUrl = `https://${process.env.FRONTEND_SUBDOMAIN}.${process.env.DOMAIN}/`;
+// the following leads to undefined url in the container:
+// const frontendUrl = `https://${process.env.FRONTEND_SUBDOMAIN}.${process.env.DOMAIN}/`;
+
+const frontendUrl = "https://starbugs_api.sweavs.de";
 console.log(`frontendUrl: ${frontendUrl}`);
 
 const corsOptions = {
