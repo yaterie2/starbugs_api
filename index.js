@@ -54,6 +54,7 @@ app.get('/constellation', async (req, res) => {
     }
 });
 
+
 app.get('/', (req, res) => {
     // console.log("calling root endpoint");
     res.send('Welcome to the Starbugs API!');
