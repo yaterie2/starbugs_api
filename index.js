@@ -39,7 +39,7 @@ app.get('/constellation', async (req, res) => {
     console.log(`calling /constellation for: ${constellation}`);
     try {
         const stars = await Star.find({
-            con: { /*$regex: constellation,*/ $options: 'i' },
+            con: { $regex: constellation, $options: 'i' },
             $or: [
                 { bay: { $nin: [null, ''] } },
                 { flam: { $nin: [null, ''] } },
