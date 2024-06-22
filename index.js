@@ -59,7 +59,10 @@ mongoose
   .catch((err) => console.error("MongoDB connection error:", err));
 
 const corsOptions = {
-  origin: [frontendUrl, "http://localhost:5173"], // Add the localhost:5174 to the allowed origins
+  origin: [
+    "https://starapp-frontend.yannick-schwab.de",
+    "http://localhost:5173",
+  ],
   methods: ["GET", "POST"],
   allowedHeaders: ["Content-Type", "Authorization"],
 };
