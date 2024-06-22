@@ -60,7 +60,6 @@ mongoose
 
 const corsOptions = {
   origin: [
-    "https://starapp-frontend.yannick-schwab.de",
     "http://localhost:5173",
     frontendUrl,
   ],
