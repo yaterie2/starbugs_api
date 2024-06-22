@@ -19,6 +19,39 @@ const starSchema = new mongoose.Schema({
 
 const Star = mongoose.model(mongoCollection, starSchema, mongoCollection);
 
+const starSchema2 = new mongoose.Schema({
+  id: Number,
+  tyc: String,
+  gaia: String,
+  hd: Number,
+  con: String,
+  ra: Number,
+  dec: Number,
+  pos_src: String,
+  dist: Number,
+  x0: Number,
+  y0: Number,
+  z0: Number,
+  dist_src: String,
+  mag: Number,
+  absmag: Number,
+  ci: Number,
+  mag_src: String,
+  rv: Number,
+  rv_src: String,
+  pm_ra: Number,
+  pm_dec: Number,
+  pm_src: String,
+  vx: Number,
+  vy: Number,
+  vz: Number,
+  spect: String,
+  spect_src: String,
+});
+
+// Create a model based on the schema
+const Star2 = mongoose.model("Star", starSchema2);
+
 console.log("connecting to " + mongoUri);
 mongoose
   .connect(mongoUri)
@@ -33,6 +66,39 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 app.use(express.json());
+
+app.get("/api/allstars", async (req, res) => {
+  const minMag = parseFloat(req.query.minMag) || -26.7;
+  const maxMag = parseFloat(req.query.maxMag) || 7;
+
+  try {
+    const stars = await Star2.find({
+      mag: { $gte: minMag, $lte: maxMag },
+      x0: { $ne: undefined },
+      y0: { $ne: undefined },
+      z0: { $ne: undefined },
+    });
+
+    res.json({
+      stars: stars.map((star) => ({
+        x: star.x0,
+        y: star.y0,
+        z: star.z0,
+        id: star.id,
+        absmag: star.absmag,
+        ci: star.ci,
+        mag: star.mag,
+        dist: star.dist,
+        ra: star.ra,
+        dec: star.dec,
+        constellation: star.con, // Assuming `con` is the constellation
+      })),
+    });
+  } catch (error) {
+    console.error("Error fetching stars:", error);
+    res.status(500).json({ error: "Error fetching stars" });
+  }
+});
 
 app.get("/constellation", async (req, res) => {
   let { constellation } = req.query;
