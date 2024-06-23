@@ -71,6 +71,14 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "https://stars.yannick-schwab.de");
+  res.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  next();
+});
+
+
 app.get("/api/allstars", async (req, res) => {
   const minMag = parseFloat(req.query.minMag) || -26.7;
   const maxMag = parseFloat(req.query.maxMag) || 7;
