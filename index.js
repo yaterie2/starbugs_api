@@ -21,6 +21,7 @@ const Star = mongoose.model(mongoCollection, starSchema, mongoCollection);
 
 const starSchema2 = new mongoose.Schema({
   id: Number,
+  hyg: Number,
   tyc: String,
   gaia: String,
   hd: Number,
