@@ -3,7 +3,6 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 
-// const TEST
 const app = express();
 const port = process.env.API_PORT || 3000;
 const mongoCollection = process.env.MONGO_COLLECTION;
@@ -68,6 +67,10 @@ const corsOptions = {
   methods: ["GET", "POST"],
   allowedHeaders: ["Content-Type", "Authorization"],
 };
+
+console.log("Frontend URL:", frontendUrl);
+
+console.log("CORS Options: ", corsOptions);
 
 app.use(cors(corsOptions));
 app.use(express.json());
